@@ -1,19 +1,5 @@
 const conexao = require("../database/conexao");
 class UsuarioModel {
-  listar() {
-    const sql = "SELECT * FROM usuarios";
-    return new Promise((resolve, reject) => {
-      conexao.query(sql, {}, (error, response) => {
-        if (error) {
-          console.log("Erro ao listar...");
-          reject(error);
-        }
-        console.log("Listando Usuarios");
-        resolve(response);
-      });
-    });
-  }
-
   criar(novoUsuario) {
     const sql = "INSERT INTO usuarios SET ?";
     return new Promise((resolve, reject) => {
@@ -28,6 +14,20 @@ class UsuarioModel {
     });
   }
 
+  listar() {
+    const sql = "SELECT * FROM usuarios";
+    return new Promise((resolve, reject) => {
+      conexao.query(sql, {}, (error, response) => {
+        if (error) {
+          console.log("Erro ao listar...");
+          reject(error);
+        }
+        console.log("Listando Usuarios");
+        resolve(response);
+      });
+    });
+  }
+
   atualizar(usuario_atualizado, id) {
     const sql = "UPDATE usuarios SET ? WHERE ID_USUARIO = ?";
     return new Promise((resolve, reject) => {
@@ -37,6 +37,20 @@ class UsuarioModel {
           reject(error);
         }
         console.log("Atualizando usuario");
+        resolve(response);
+      });
+    });
+  }
+
+  deletar(id) {
+    const sql = "DELETE FROM usuarios WHERE ID_USUARIO = ?";
+    return new Promise((resolve, reject) => {
+      conexao.query(sql, id, (error, response) => {
+        if (error) {
+          console.log("Erro ao deletar usuario...");
+          reject(error);
+        }
+        console.log("Deletando Usuario");
         resolve(response);
       });
     });

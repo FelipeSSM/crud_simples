@@ -13,7 +13,7 @@ class UsuarioController {
     return usuario_model.atualizar(usuario_atualizado, id);
   }
   deletar(id) {
-    return `Deletando Usuario de ID ${id}`;
+    return usuario_model.deletar(id);
   }
 }
 

@@ -39,8 +39,10 @@ router.put("/usuario/:id", (req, res) => {
 
 router.delete("/usuario/:id", (req, res) => {
   const { id } = req.params;
-  const resposta = usuarioController.deletar(id);
-  res.send(resposta);
+  const usuario = usuarioController.deletar(id);
+  usuario
+    .then((usuarioDeletado) => res.status(200).json(usuarioDeletado))
+    .catch((error) => res.status(400).json(error.message));
 });
 
 module.exports = router;
