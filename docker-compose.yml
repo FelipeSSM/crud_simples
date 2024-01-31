@@ -1,0 +1,18 @@
+version: "1.0"
+services:
+  db:
+    image: mysql:8.3.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: "crud_simples_db"
+      MYSQL_USER: "usuario"
+      MYSQL_PASSWORD: "12341234"
+      MYSQL_ROOT_PASSWORD: "root1234"
+    ports:
+      - "4321:3306"
+    expose:
+      - "3306"
+    volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:
