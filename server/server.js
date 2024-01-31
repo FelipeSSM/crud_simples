@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
+app.use(cors());
 const porta = 1234;
 const appCustom = require("./config/appcustom");
 appCustom(app, express);
