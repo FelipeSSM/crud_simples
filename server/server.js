@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const porta = 1234;
 const router = require("./routers/index");
-router(app);
+router(app, express);
 const conexao = require("./database/conexao");
 const tabelas = require("./database/tabelas");
 

@@ -7,8 +7,10 @@ router.get("/", (req, res) => {
 });
 
 router.get("/usuario", (req, res) => {
-  const resposta = usuarioController.buscar();
-  res.send(resposta);
+  const usuarios = usuarioController.buscar();
+  usuarios
+    .then((usuario) => res.status(200).json(usuario))
+    .catch((error) => res.status(400).json(error.message));
 });
 
 router.get("/usuario/:id", (req, res) => {
@@ -18,8 +20,12 @@ router.get("/usuario/:id", (req, res) => {
 });
 
 router.post("/usuario", (req, res) => {
-  const resposta = usuarioController.criar();
-  res.send(resposta);
+  const novoUsuario = req.body;
+
+  const usuario = usuarioController.criar(novoUsuario);
+  usuario
+    .then((usuarioCriado) => res.status(201).json(usuarioCriado))
+    .catch((error) => res.status(400).json(error.message));
 });
 
 router.put("/usuario/:id", (req, res) => {
