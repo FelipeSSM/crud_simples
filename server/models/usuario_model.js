@@ -1,73 +1,39 @@
 const conexao = require("../database/conexao");
 class UsuarioModel {
-  criar(novoUsuario) {
-    const sql = "INSERT INTO usuarios SET ?";
+  executaQuery(sql, parametros = "") {
     return new Promise((resolve, reject) => {
-      conexao.query(sql, novoUsuario, (error, response) => {
+      conexao.query(sql, parametros, (error, response) => {
         if (error) {
-          console.log("Erro ao criar usuario...");
-          reject(error);
+          return reject(error);
         }
-        console.log("Criando usuario");
-        resolve(response);
+        return resolve(response);
       });
     });
+  }
+
+  criar(novoUsuario) {
+    const sql = "INSERT INTO usuarios SET ?";
+    return this.executaQuery(sql, novoUsuario);
   }
 
   listar() {
     const sql = "SELECT * FROM usuarios";
-    return new Promise((resolve, reject) => {
-      conexao.query(sql, {}, (error, response) => {
-        if (error) {
-          console.log("Erro ao listar...");
-          reject(error);
-        }
-        console.log("Listando Usuarios");
-        resolve(response);
-      });
-    });
+    return this.executaQuery(sql);
   }
 
   listarPorId(id) {
     const sql = "SELECT * FROM usuarios WHERE ID_USUARIO = ?";
-    return new Promise((resolve, reject) => {
-      conexao.query(sql, id, (error, response) => {
-        if (error) {
-          console.log("Erro ao listar usuario...");
-          reject(error);
-        }
-        console.log("Listando Usuario");
-        resolve(response);
-      });
-    });
+    return this.executaQuery(sql, id);
   }
 
   atualizar(usuario_atualizado, id) {
     const sql = "UPDATE usuarios SET ? WHERE ID_USUARIO = ?";
-    return new Promise((resolve, reject) => {
-      conexao.query(sql, [usuario_atualizado, id], (error, response) => {
-        if (error) {
-          console.log("Erro ao atualizar usuario...");
-          reject(error);
-        }
-        console.log("Atualizando usuario");
-        resolve(response);
-      });
-    });
+    return this.executaQuery(sql, [usuario_atualizado, id]);
   }
 
   deletar(id) {
     const sql = "DELETE FROM usuarios WHERE ID_USUARIO = ?";
-    return new Promise((resolve, reject) => {
-      conexao.query(sql, id, (error, response) => {
-        if (error) {
-          console.log("Erro ao deletar usuario...");
-          reject(error);
-        }
-        console.log("Deletando Usuario");
-        resolve(response);
-      });
-    });
+    return this.executaQuery(sql, id);
   }
 }
 
