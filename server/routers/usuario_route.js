@@ -30,8 +30,11 @@ router.post("/usuario", (req, res) => {
 
 router.put("/usuario/:id", (req, res) => {
   const { id } = req.params;
-  const resposta = usuarioController.atualizar(id);
-  res.send(resposta);
+  const usuario_atualizado = req.body;
+  const usuario = usuarioController.atualizar(usuario_atualizado, id);
+  usuario
+    .then((usuarioAtualizado) => res.status(200).json(usuarioAtualizado))
+    .catch((error) => res.status(400).json(error.message));
 });
 
 router.delete("/usuario/:id", (req, res) => {

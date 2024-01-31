@@ -9,8 +9,8 @@ class UsuarioController {
   criar(novoUsuario) {
     return usuario_model.criar(novoUsuario);
   }
-  atualizar(id) {
-    return `Alterando Usuario de ID ${id}`;
+  atualizar(usuario_atualizado, id) {
+    return usuario_model.atualizar(usuario_atualizado, id);
   }
   deletar(id) {
     return `Deletando Usuario de ID ${id}`;
