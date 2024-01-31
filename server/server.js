@@ -3,6 +3,10 @@ const app = express();
 const porta = 1234;
 const router = require("./routers/index");
 router(app);
+const conexao = require("./database/conexao");
+const tabelas = require("./database/tabelas");
+
+tabelas.init(conexao);
 
 app.listen(porta, (error) => {
   if (error) {
