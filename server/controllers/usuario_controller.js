@@ -4,7 +4,7 @@ class UsuarioController {
     return usuario_model.listar();
   }
   buscarPorId(id) {
-    return `Buscando por usuario de ID ${id}`;
+    return usuario_model.listarPorId(id);
   }
   criar(novoUsuario) {
     return usuario_model.criar(novoUsuario);

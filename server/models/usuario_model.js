@@ -28,6 +28,20 @@ class UsuarioModel {
     });
   }
 
+  listarPorId(id) {
+    const sql = "SELECT * FROM usuarios WHERE ID_USUARIO = ?";
+    return new Promise((resolve, reject) => {
+      conexao.query(sql, id, (error, response) => {
+        if (error) {
+          console.log("Erro ao listar usuario...");
+          reject(error);
+        }
+        console.log("Listando Usuario");
+        resolve(response);
+      });
+    });
+  }
+
   atualizar(usuario_atualizado, id) {
     const sql = "UPDATE usuarios SET ? WHERE ID_USUARIO = ?";
     return new Promise((resolve, reject) => {
