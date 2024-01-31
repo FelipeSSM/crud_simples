@@ -10,5 +10,5 @@ Uma aplicação simples e direta; Cadastra, lê, atualiza e deleta usuários! Tu
 
 - Express
 - Nodemon
-- Mysql
+- Mysql2
 - Cors
