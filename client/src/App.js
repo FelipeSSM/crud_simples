@@ -7,7 +7,7 @@ import Usuarios from "./components/Usuarios";
 function App() {
   return (
     <div className="App">
-      <h1>Meu Frontend</h1>
+      <h1>crud_simples</h1>
       <BrowserRouter>
         <Nav variant="tabs">
           <Nav.Link as={Link} to="/">

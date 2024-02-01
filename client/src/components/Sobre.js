@@ -1,7 +1,7 @@
 function Sobre() {
   return (
     <div>
-      <p>Esta e a pagina sobre</p>
+      <p>Projeto criado para o Desafio frontend - Mobidata</p>
     </div>
   );
 }
