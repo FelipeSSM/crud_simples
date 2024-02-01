@@ -1,3 +1,5 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Nav } from "react-bootstrap";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Funcionarios from "./components/Funcionarios";
 import Home from "./components/Home";
@@ -7,17 +9,17 @@ function App() {
     <div className="App">
       <h1>Meu Frontend</h1>
       <BrowserRouter>
-        <ul>
-          <li>
-            <Link to="/">Página Inicial</Link>
-          </li>
-          <li>
-            <Link to="/funcionarios">Cadastro de Funcionarios</Link>
-          </li>
-          <li>
-            <Link to="/sobre">Sobre</Link>
-          </li>
-        </ul>
+        <Nav variant="tabs">
+          <Nav.Link as={Link} to="/">
+            Pagina Inicial
+          </Nav.Link>
+          <Nav.Link as={Link} to="/funcionarios">
+            Cadastro de Funcionarios
+          </Nav.Link>
+          <Nav.Link as={Link} to="/sobre">
+            Sobre
+          </Nav.Link>
+        </Nav>
 
         <Routes>
           <Route path="/" index element={<Home />}></Route>
