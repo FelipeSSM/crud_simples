@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 class Usuarios extends React.Component {
   constructor(props) {
     super(props);
@@ -9,12 +9,26 @@ class Usuarios extends React.Component {
   }
 
   componentDidMount() {
+    this.buscarUsuarios();
+  }
+
+  buscarUsuarios = () => {
     fetch("http://localhost:1234/usuario")
       .then((response) => response.json())
       .then((dados) => {
         this.setState({ usuarios: dados });
       });
-  }
+  };
+
+  deletarUsuario = (id) => {
+    fetch("http://localhost:1234/usuario/" + id, { method: "DELETE" }).then(
+      (response) => {
+        if (response.ok) {
+          this.buscarUsuarios();
+        }
+      }
+    );
+  };
 
   render() {
     return (
@@ -35,7 +49,15 @@ class Usuarios extends React.Component {
               <td> {usuario.EMAIL_USUARIO}</td>
               <td> {usuario.CPF_USUARIO}</td>
               <td> {usuario.ENDERECO_USUARIO}</td>
-              <td>Atualizar, Excluir</td>
+              <td>
+                Atualizar,
+                <Button
+                  variant="danger"
+                  onClick={() => this.deletarUsuario(usuario.ID_USUARIO)}
+                >
+                  Excluir
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>
