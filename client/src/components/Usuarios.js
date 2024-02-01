@@ -6,6 +6,7 @@ class Usuarios extends React.Component {
     this.state = {
       id: 0,
       usuarios: [],
+      usuariosDesativados: [],
       nome: "",
       email: "",
       cpf: "",
@@ -27,6 +28,12 @@ class Usuarios extends React.Component {
       .then((dados) => {
         this.setState({ usuarios: dados });
       });
+
+    fetch("http://localhost:1234/usuario/desativados")
+      .then((response) => response.json())
+      .then((dados2) => {
+        this.setState({ usuariosDesativados: dados2 });
+      });
   };
 
   deletarUsuario = (id) => {
@@ -37,6 +44,26 @@ class Usuarios extends React.Component {
         }
       }
     );
+  };
+
+  ativarUsuario = (id) => {
+    fetch("http://localhost:1234/usuario/ativar/" + id, {
+      method: "PUT",
+    }).then((response) => {
+      if (response.ok) {
+        this.buscarUsuarios();
+      }
+    });
+  };
+
+  desativarUsuario = (id) => {
+    fetch("http://localhost:1234/usuario/desativar/" + id, {
+      method: "PUT",
+    }).then((response) => {
+      if (response.ok) {
+        this.buscarUsuarios();
+      }
+    });
   };
 
   carregarDados = (id) => {
@@ -205,6 +232,31 @@ class Usuarios extends React.Component {
                   onClick={() => this.desativarUsuario(usuario.ID_USUARIO)}
                 >
                   Desativar
+                </Button>
+                ,
+                <Button
+                  variant="danger"
+                  onClick={() => this.deletarUsuario(usuario.ID_USUARIO)}
+                >
+                  Excluir
+                </Button>
+              </td>
+            </tr>
+          ))}
+          ,<h3>USUÁRIOS DESATIVADOS</h3>,
+          {this.state.usuariosDesativados.map((usuario) => (
+            <tr>
+              <td> {usuario.NOME_USUARIO}</td>
+              <td> {usuario.EMAIL_USUARIO}</td>
+              <td> {usuario.CPF_USUARIO}</td>
+              <td> {usuario.ENDERECO_USUARIO}</td>
+              <td>
+                ,
+                <Button
+                  variant="warning"
+                  onClick={() => this.ativarUsuario(usuario.ID_USUARIO)}
+                >
+                  Ativar Usuario
                 </Button>
                 ,
                 <Button

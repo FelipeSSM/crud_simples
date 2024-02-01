@@ -12,6 +12,10 @@ router.post("/usuario", usuarioController.criar);
 
 router.put("/usuario/:id", usuarioController.atualizar);
 
+router.put("/usuario/ativar/:id", usuarioController.ativarUsuario);
+
+router.put("/usuario/desativar/:id", usuarioController.desativarUsuario);
+
 router.delete("/usuario/:id", usuarioController.deletar);
 
 module.exports = router;

@@ -45,6 +45,18 @@ class UsuarioModel {
     const sql = "SELECT * FROM usuarios WHERE STATUS_USUARIO = 'DESATIVADO'";
     return this.executaQuery(sql);
   }
+
+  ativarUsuario(id) {
+    const sql =
+      "UPDATE usuarios SET STATUS_USUARIO = 'ATIVO' WHERE ID_USUARIO = ?";
+    return this.executaQuery(sql, id);
+  }
+
+  desativarUsuario(id) {
+    const sql =
+      "UPDATE usuarios SET STATUS_USUARIO = 'DESATIVADO' WHERE ID_USUARIO = ?";
+    return this.executaQuery(sql, id);
+  }
 }
 
 module.exports = new UsuarioModel();

@@ -36,6 +36,23 @@ class UsuarioController {
       .then((usuarioAtualizado) => res.status(200).json(usuarioAtualizado))
       .catch((error) => res.status(400).json(error.message));
   }
+
+  ativarUsuario(req, res) {
+    const { id } = req.params;
+    const usuario = usuario_model.ativarUsuario(id);
+    return usuario
+      .then((usuarioAtualizado) => res.status(200).json(usuarioAtualizado))
+      .catch((error) => res.status(400).json(error.message));
+  }
+
+  desativarUsuario(req, res) {
+    const { id } = req.params;
+    const usuario = usuario_model.desativarUsuario(id);
+    return usuario
+      .then((usuarioAtualizado) => res.status(200).json(usuarioAtualizado))
+      .catch((error) => res.status(400).json(error.message));
+  }
+
   deletar(req, res) {
     const { id } = req.params;
     const usuario = usuario_model.deletar(id);
