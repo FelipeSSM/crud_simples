@@ -8,7 +8,7 @@ class UsuarioController {
   }
   buscarPorId(req, res) {
     const { id } = req.params;
-    const usuario = usuario_model.buscarPorId(id);
+    const usuario = usuario_model.listarPorId(id);
     return usuario
       .then((usuariores) => res.status(200).json(usuariores))
       .catch((error) => res.status(400).json(error.message));

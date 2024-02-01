@@ -4,6 +4,7 @@ class Usuarios extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: 0,
       usuarios: [],
       nome: "",
       email: "",
@@ -37,9 +38,40 @@ class Usuarios extends React.Component {
     );
   };
 
+  carregarDados = (id) => {
+    fetch("http://localhost:1234/usuario/" + id, { method: "GET" })
+      .then((response) => response.json())
+      .then((usuario) => {
+        const arrayEndereco = usuario[0].ENDERECO_USUARIO.split(",");
+
+        this.setState({
+          id: usuario[0].ID_USUARIO,
+          nome: usuario[0].NOME_USUARIO,
+          email: usuario[0].EMAIL_USUARIO,
+          cpf: usuario[0].CPF_USUARIO,
+          endereco: arrayEndereco[0],
+          cidade: arrayEndereco[1],
+          estado: arrayEndereco[2],
+          cep: arrayEndereco[3],
+        });
+      });
+  };
+
   cadastrarUsuario = (usuario) => {
     fetch("http://localhost:1234/usuario", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(usuario),
+    }).then((response) => {
+      if (response.ok) {
+        this.buscarUsuarios();
+      }
+    });
+  };
+
+  atualizarUsuario = (usuario) => {
+    fetch("http://localhost:1234/usuario/" + usuario.ID_USUARIO, {
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(usuario),
     }).then((response) => {
@@ -92,15 +124,37 @@ class Usuarios extends React.Component {
   };
 
   submit = () => {
-    const usuario = {
-      NOME_USUARIO: this.state.nome,
-      EMAIL_USUARIO: this.state.email,
-      CPF_USUARIO: this.state.cpf,
-      ENDERECO_USUARIO: `${this.state.endereco}, ${this.state.cidade}, ${this.state.estado}, ${this.state.cep}`,
-    };
+    if (this.state == 0) {
+      const usuario = {
+        NOME_USUARIO: this.state.nome,
+        EMAIL_USUARIO: this.state.email,
+        CPF_USUARIO: this.state.cpf,
+        ENDERECO_USUARIO: `${this.state.endereco}, ${this.state.cidade}, ${this.state.estado}, ${this.state.cep}`,
+      };
+      this.cadastrarUsuario(usuario);
+    } else {
+      const usuario = {
+        ID_USUARIO: this.state.id,
+        NOME_USUARIO: this.state.nome,
+        EMAIL_USUARIO: this.state.email,
+        CPF_USUARIO: this.state.cpf,
+        ENDERECO_USUARIO: `${this.state.endereco}, ${this.state.cidade}, ${this.state.estado}, ${this.state.cep}`,
+      };
+      this.atualizarUsuario(usuario);
+    }
+  };
 
-    console.log(usuario);
-    this.cadastrarUsuario(usuario);
+  reset = () => {
+    this.setState({
+      id: 0,
+      nome: "",
+      email: "",
+      cpf: "",
+      endereco: "",
+      cidade: "",
+      estado: "",
+      cep: "",
+    });
   };
 
   renderTabela() {
@@ -123,7 +177,13 @@ class Usuarios extends React.Component {
               <td> {usuario.CPF_USUARIO}</td>
               <td> {usuario.ENDERECO_USUARIO}</td>
               <td>
-                Atualizar,
+                <Button
+                  variant="secondary"
+                  onClick={() => this.carregarDados(usuario.ID_USUARIO)}
+                >
+                  Atualizar
+                </Button>
+                ,
                 <Button
                   variant="danger"
                   onClick={() => this.deletarUsuario(usuario.ID_USUARIO)}
@@ -142,6 +202,11 @@ class Usuarios extends React.Component {
     return (
       <Form>
         <Row className="mb-3">
+          <Form.Group as={Col} controlId="formGridNome">
+            <Form.Label>ID</Form.Label>
+            <Form.Control type="name" value={this.state.id} readOnly={true} />
+          </Form.Group>
+
           <Form.Group as={Col} controlId="formGridNome">
             <Form.Label>Nome</Form.Label>
             <Form.Control
@@ -235,6 +300,9 @@ class Usuarios extends React.Component {
 
         <Button variant="primary" type="button" onClick={this.submit}>
           Enviar
+        </Button>
+        <Button variant="warning" type="button" onClick={this.reset}>
+          Novo
         </Button>
       </Form>
     );
