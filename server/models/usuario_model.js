@@ -35,6 +35,16 @@ class UsuarioModel {
     const sql = "DELETE FROM usuarios WHERE ID_USUARIO = ?";
     return this.executaQuery(sql, id);
   }
+
+  filtrarAtivados() {
+    const sql = "SELECT * FROM usuarios WHERE STATUS_USUARIO = 'ATIVO'";
+    return this.executaQuery(sql);
+  }
+
+  filtrarDesativados() {
+    const sql = "SELECT * FROM usuarios WHERE STATUS_USUARIO = 'DESATIVADO'";
+    return this.executaQuery(sql);
+  }
 }
 
 module.exports = new UsuarioModel();

@@ -1,11 +1,19 @@
 const usuario_model = require("../models/usuario_model");
 class UsuarioController {
   listar(req, res) {
-    const usuarios = usuario_model.listar();
+    const usuarios = usuario_model.filtrarAtivados();
     return usuarios
       .then((usuario) => res.status(200).json(usuario))
       .catch((error) => res.status(400).json(error.message));
   }
+
+  listarDesativados(req, res) {
+    const usuarios = usuario_model.filtrarDesativados();
+    return usuarios
+      .then((usuario) => res.status(200).json(usuario))
+      .catch((error) => res.status(400).json(error.message));
+  }
+
   buscarPorId(req, res) {
     const { id } = req.params;
     const usuario = usuario_model.listarPorId(id);

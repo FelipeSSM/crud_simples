@@ -126,7 +126,7 @@ class Usuarios extends React.Component {
   };
 
   submit = () => {
-    if (this.state.id == 0) {
+    if (this.state.id === 0) {
       const usuario = {
         NOME_USUARIO: this.state.nome,
         EMAIL_USUARIO: this.state.email,
@@ -198,6 +198,13 @@ class Usuarios extends React.Component {
                   onClick={() => this.carregarDados(usuario.ID_USUARIO)}
                 >
                   Atualizar
+                </Button>
+                ,
+                <Button
+                  variant="warning"
+                  onClick={() => this.desativarUsuario(usuario.ID_USUARIO)}
+                >
+                  Desativar
                 </Button>
                 ,
                 <Button
