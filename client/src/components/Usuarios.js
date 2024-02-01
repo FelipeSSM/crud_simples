@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Col, Form, Row, Table } from "react-bootstrap";
+import { Button, Col, Form, Modal, Row, Table } from "react-bootstrap";
 class Usuarios extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +13,7 @@ class Usuarios extends React.Component {
       cidade: "",
       estado: "",
       cep: "",
+      modalAberto: false,
     };
   }
 
@@ -54,6 +55,7 @@ class Usuarios extends React.Component {
           estado: arrayEndereco[2],
           cep: arrayEndereco[3],
         });
+        this.abrirModal();
       });
   };
 
@@ -124,7 +126,7 @@ class Usuarios extends React.Component {
   };
 
   submit = () => {
-    if (this.state == 0) {
+    if (this.state.id == 0) {
       const usuario = {
         NOME_USUARIO: this.state.nome,
         EMAIL_USUARIO: this.state.email,
@@ -142,6 +144,7 @@ class Usuarios extends React.Component {
       };
       this.atualizarUsuario(usuario);
     }
+    this.fecharModal();
   };
 
   reset = () => {
@@ -154,6 +157,19 @@ class Usuarios extends React.Component {
       cidade: "",
       estado: "",
       cep: "",
+    });
+    this.abrirModal();
+  };
+
+  fecharModal = () => {
+    this.setState({
+      modalAberto: false,
+    });
+  };
+
+  abrirModal = () => {
+    this.setState({
+      modalAberto: true,
     });
   };
 
@@ -198,129 +214,135 @@ class Usuarios extends React.Component {
     );
   }
 
-  renderForm() {
-    return (
-      <Form>
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridNome">
-            <Form.Label>ID</Form.Label>
-            <Form.Control type="name" value={this.state.id} readOnly={true} />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridNome">
-            <Form.Label>Nome</Form.Label>
-            <Form.Control
-              type="name"
-              placeholder="Digite seu nome aqui!"
-              value={this.state.nome}
-              onChange={this.atualizaNome}
-            />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridEmail">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Digite seu email aqui!"
-              value={this.state.email}
-              onChange={this.atualizaEmail}
-            />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridCpf">
-            <Form.Label>CPF</Form.Label>
-            <Form.Control
-              placeholder="XXXXXXXXX-XX"
-              value={this.state.cpf}
-              onChange={this.atualizaCpf}
-            />
-          </Form.Group>
-        </Row>
-
-        <Form.Group className="mb-3" controlId="formGridEndereco">
-          <Form.Label>Endereco</Form.Label>
-          <Form.Control
-            placeholder="Rua, Numero"
-            value={this.state.endereco}
-            onChange={this.atualizaEndereco}
-          />
-        </Form.Group>
-
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="formGridCidade">
-            <Form.Label>Cidade</Form.Label>
-            <Form.Control
-              value={this.state.cidade}
-              onChange={this.atualizaCidade}
-            />
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridEstado">
-            <Form.Label>Estado</Form.Label>
-            <Form.Select
-              defaultValue="RJ"
-              value={this.state.estado}
-              onChange={this.atualizaEstado}
-            >
-              <option>AC</option>
-              <option>AL</option>
-              <option>AP</option>
-              <option>AM</option>
-              <option>BA</option>
-              <option>CE</option>
-              <option>DF</option>
-              <option>ES</option>
-              <option>GO</option>
-              <option>MA</option>
-              <option>MT</option>
-              <option>MS</option>
-              <option>MG</option>
-              <option>PA</option>
-              <option>PB</option>
-              <option>PR</option>
-              <option>PE</option>
-              <option>PI</option>
-              <option>RJ</option>
-              <option>RN</option>
-              <option>RS</option>
-              <option>RO</option>
-              <option>RR</option>
-              <option>SC</option>
-              <option>SP</option>
-              <option>SE</option>
-              <option>TO</option>
-            </Form.Select>
-          </Form.Group>
-
-          <Form.Group as={Col} controlId="formGridCep">
-            <Form.Label>CEP</Form.Label>
-            <Form.Control value={this.state.cep} onChange={this.atualizaCep} />
-          </Form.Group>
-        </Row>
-
-        <Button variant="primary" type="button" onClick={this.submit}>
-          Enviar
-        </Button>
-        <Button variant="warning" type="button" onClick={this.reset}>
-          Novo
-        </Button>
-      </Form>
-    );
-  }
-
   render() {
     return (
       <div>
+        <Modal show={this.state.modalAberto} onHide={this.fecharModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Dados do Usuario</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="formGridNome">
+                  <Form.Label>ID</Form.Label>
+                  <Form.Control
+                    type="name"
+                    value={this.state.id}
+                    readOnly={true}
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridNome">
+                  <Form.Label>Nome</Form.Label>
+                  <Form.Control
+                    type="name"
+                    placeholder="Digite seu nome aqui!"
+                    value={this.state.nome}
+                    onChange={this.atualizaNome}
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Digite seu email aqui!"
+                    value={this.state.email}
+                    onChange={this.atualizaEmail}
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridCpf">
+                  <Form.Label>CPF</Form.Label>
+                  <Form.Control
+                    placeholder="XXXXXXXXX-XX"
+                    value={this.state.cpf}
+                    onChange={this.atualizaCpf}
+                  />
+                </Form.Group>
+              </Row>
+
+              <Form.Group className="mb-3" controlId="formGridEndereco">
+                <Form.Label>Endereco</Form.Label>
+                <Form.Control
+                  placeholder="Rua, Numero"
+                  value={this.state.endereco}
+                  onChange={this.atualizaEndereco}
+                />
+              </Form.Group>
+
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="formGridCidade">
+                  <Form.Label>Cidade</Form.Label>
+                  <Form.Control
+                    value={this.state.cidade}
+                    onChange={this.atualizaCidade}
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridEstado">
+                  <Form.Label>Estado</Form.Label>
+                  <Form.Select
+                    defaultValue="RJ"
+                    value={this.state.estado}
+                    onChange={this.atualizaEstado}
+                  >
+                    <option>AC</option>
+                    <option>AL</option>
+                    <option>AP</option>
+                    <option>AM</option>
+                    <option>BA</option>
+                    <option>CE</option>
+                    <option>DF</option>
+                    <option>ES</option>
+                    <option>GO</option>
+                    <option>MA</option>
+                    <option>MT</option>
+                    <option>MS</option>
+                    <option>MG</option>
+                    <option>PA</option>
+                    <option>PB</option>
+                    <option>PR</option>
+                    <option>PE</option>
+                    <option>PI</option>
+                    <option>RJ</option>
+                    <option>RN</option>
+                    <option>RS</option>
+                    <option>RO</option>
+                    <option>RR</option>
+                    <option>SC</option>
+                    <option>SP</option>
+                    <option>SE</option>
+                    <option>TO</option>
+                  </Form.Select>
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridCep">
+                  <Form.Label>CEP</Form.Label>
+                  <Form.Control
+                    value={this.state.cep}
+                    onChange={this.atualizaCep}
+                  />
+                </Form.Group>
+              </Row>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.fecharModal}>
+              Fechar
+            </Button>
+            <Button variant="primary" type="button" onClick={this.submit}>
+              Enviar
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
         <br />
-        <Button
-          variant="primary"
-          className="button-novo"
-          onClick={this.abrirModalInserir}
-        >
-          Cadastrar Usuario
+        <Button variant="warning" type="button" onClick={this.reset}>
+          Novo
         </Button>
         {this.renderTabela()}
-        {this.renderForm()}
       </div>
     );
   }
