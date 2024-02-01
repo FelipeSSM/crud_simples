@@ -4,7 +4,32 @@ class Funcionarios extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      alunos: [],
+      funcionarios: [
+        {
+          ID_USUARIO: 1,
+          NOME_USUARIO: "Felipe",
+          EMAIL_USUARIO: "email@email.com",
+          CPF_USUARIO: "15456233854",
+          ENDERECO_USUARIO: "RUA RAFAEL, 120, TRES CORACOES",
+          STATUS_USUARIO: "ATIVO",
+        },
+        {
+          ID_USUARIO: 2,
+          NOME_USUARIO: "Rafael",
+          EMAIL_USUARIO: "email2@email2.com",
+          CPF_USUARIO: "12345678987",
+          ENDERECO_USUARIO: "RUA FELIPE, 120, TRES CORACOES",
+          STATUS_USUARIO: "ATIVO",
+        },
+        {
+          ID_USUARIO: 2,
+          NOME_USUARIO: "Rafael",
+          EMAIL_USUARIO: "email2@email2.com",
+          CPF_USUARIO: "12345678987",
+          ENDERECO_USUARIO: "RUA FELIPE, 120, TRES CORACOES",
+          STATUS_USUARIO: "ATIVO",
+        },
+      ],
     };
   }
 
@@ -21,13 +46,15 @@ class Funcionarios extends React.Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Felipe</td>
-            <td>Felipe20@email.com</td>
-            <td>15478544203</td>
-            <td>Rua tal 420 tres fodacezoes</td>
-            <td>Atualizar, Excluir</td>
-          </tr>
+          {this.state.funcionarios.map((funcionario) => (
+            <tr>
+              <td> {funcionario.NOME_USUARIO}</td>
+              <td> {funcionario.EMAIL_USUARIO}</td>
+              <td> {funcionario.CPF_USUARIO}</td>
+              <td> {funcionario.ENDERECO_USUARIO}</td>
+              <td>Atualizar, Excluir</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     );
