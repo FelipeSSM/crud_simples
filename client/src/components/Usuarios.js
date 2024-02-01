@@ -243,14 +243,26 @@ class Usuarios extends React.Component {
               </td>
             </tr>
           ))}
-          ,<h3>USUÁRIOS DESATIVADOS</h3>,
+          ,
           {this.state.usuariosDesativados.map((usuario) => (
             <tr>
-              <td> {usuario.NOME_USUARIO}</td>
-              <td> {usuario.EMAIL_USUARIO}</td>
-              <td> {usuario.CPF_USUARIO}</td>
-              <td> {usuario.ENDERECO_USUARIO}</td>
-              <td>
+              <td style={{ backgroundColor: "gray" }}>
+                {" "}
+                {usuario.NOME_USUARIO + " (DESATIVADO)"}
+              </td>
+              <td style={{ backgroundColor: "gray" }}>
+                {" "}
+                {usuario.EMAIL_USUARIO}
+              </td>
+              <td style={{ backgroundColor: "gray" }}>
+                {" "}
+                {usuario.CPF_USUARIO}
+              </td>
+              <td style={{ backgroundColor: "gray" }}>
+                {" "}
+                {usuario.ENDERECO_USUARIO}
+              </td>
+              <td style={{ backgroundColor: "gray" }}>
                 ,
                 <Button
                   variant="warning"
