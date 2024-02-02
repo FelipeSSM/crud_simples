@@ -1,7 +1,10 @@
 function Sobre() {
   return (
     <div>
-      <p>Projeto criado para o Desafio frontend - Mobidata</p>
+      <p>
+        Projeto criado para o Desafio frontend - Mobidata, Front end criado
+        usando REACT e Bootstrap
+      </p>
     </div>
   );
 }
