@@ -22,7 +22,7 @@ class UsuarioModel {
   }
 
   buscaFiltro(filtro) {
-    const sql = `SELECT * FROM usuarios WHERE NOME_USUARIO LIKE "%${filtro}%"`;
+    const sql = `SELECT * FROM usuarios WHERE NOME_USUARIO LIKE "%${filtro}%" AND STATUS_USUARIO = "ATIVO"`;
     return this.executaQuery(sql);
   }
 

@@ -15,15 +15,24 @@ class Usuarios extends React.Component {
       estado: "",
       cep: "",
       modalAberto: false,
+      filtro: "",
     };
   }
 
   componentDidMount() {
-    this.buscarUsuarios();
+    this.buscarUsuarios(this.state.filtro);
   }
 
-  buscarUsuarios = () => {
-    fetch("http://localhost:1234/usuario")
+  buscarUsuarios = (valor) => {
+    this.setState({
+      filtro: valor,
+    });
+
+    if (valor === "") {
+      valor = "null";
+    }
+
+    fetch("http://localhost:1234/usuario/filtro/" + valor)
       .then((response) => response.json())
       .then((dados) => {
         this.setState({ usuarios: dados });
@@ -40,7 +49,7 @@ class Usuarios extends React.Component {
     fetch("http://localhost:1234/usuario/" + id, { method: "DELETE" }).then(
       (response) => {
         if (response.ok) {
-          this.buscarUsuarios();
+          this.buscarUsuarios(this.state.filtro);
         }
       }
     );
@@ -51,7 +60,7 @@ class Usuarios extends React.Component {
       method: "PUT",
     }).then((response) => {
       if (response.ok) {
-        this.buscarUsuarios();
+        this.buscarUsuarios(this.state.filtro);
       }
     });
   };
@@ -61,7 +70,7 @@ class Usuarios extends React.Component {
       method: "PUT",
     }).then((response) => {
       if (response.ok) {
-        this.buscarUsuarios();
+        this.buscarUsuarios(this.state.filtro);
       }
     });
   };
@@ -93,7 +102,7 @@ class Usuarios extends React.Component {
       body: JSON.stringify(usuario),
     }).then((response) => {
       if (response.ok) {
-        this.buscarUsuarios();
+        this.buscarUsuarios(this.state.filtro);
       }
     });
   };
@@ -105,7 +114,7 @@ class Usuarios extends React.Component {
       body: JSON.stringify(usuario),
     }).then((response) => {
       if (response.ok) {
-        this.buscarUsuarios();
+        this.buscarUsuarios(this.state.filtro);
       }
     });
   };
@@ -285,7 +294,12 @@ class Usuarios extends React.Component {
     );
   }
 
+  filtro(ev) {
+    this.buscarUsuarios(ev);
+  }
+
   render() {
+    console.log(this.state.filtro);
     return (
       <div>
         <Modal show={this.state.modalAberto} onHide={this.fecharModal}>
@@ -413,6 +427,11 @@ class Usuarios extends React.Component {
         <Button variant="warning" type="button" onClick={this.reset}>
           Novo
         </Button>
+        <input
+          type="text"
+          value={this.state.filtro}
+          onChange={(ev) => this.filtro(ev.target.value)}
+        ></input>
         {this.renderTabela()}
       </div>
     );

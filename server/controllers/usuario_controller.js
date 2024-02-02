@@ -24,7 +24,13 @@ class UsuarioController {
 
   buscaFiltro(req, res) {
     const { valor } = req.params;
-    const usuario = usuario_model.buscaFiltro(valor);
+    let usuario;
+    if (valor === "null") {
+      usuario = usuario_model.filtrarAtivados();
+    } else {
+      usuario = usuario_model.buscaFiltro(valor);
+    }
+
     return usuario
       .then((usuariores) => res.status(200).json(usuariores))
       .catch((error) => res.status(400).json(error.message));
