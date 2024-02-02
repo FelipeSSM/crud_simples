@@ -431,6 +431,8 @@ class Usuarios extends React.Component {
           type="text"
           value={this.state.filtro}
           onChange={(ev) => this.filtro(ev.target.value)}
+          style={{ marginLeft: "10px" }}
+          placeholder="Filtro por Nome"
         ></input>
         {this.renderTabela()}
       </div>
