@@ -21,6 +21,15 @@ class UsuarioController {
       .then((usuariores) => res.status(200).json(usuariores))
       .catch((error) => res.status(400).json(error.message));
   }
+
+  buscaFiltro(req, res) {
+    const filtro = req.body.filtro;
+    const usuario = usuario_model.buscaFiltro(filtro);
+    return usuario
+      .then((usuariores) => res.status(200).json(usuariores))
+      .catch((error) => res.status(400).json(error.message));
+  }
+
   criar(req, res) {
     const novoUsuario = req.body;
     const usuario = usuario_model.criar(novoUsuario);

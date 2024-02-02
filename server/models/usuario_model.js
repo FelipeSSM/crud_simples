@@ -21,6 +21,11 @@ class UsuarioModel {
     return this.executaQuery(sql);
   }
 
+  buscaFiltro(filtro) {
+    const sql = `SELECT * FROM usuarios WHERE NOME_USUARIO LIKE "%${filtro}%"`;
+    return this.executaQuery(sql);
+  }
+
   listarPorId(id) {
     const sql = "SELECT * FROM usuarios WHERE ID_USUARIO = ?";
     return this.executaQuery(sql, id);
