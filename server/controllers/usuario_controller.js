@@ -23,8 +23,8 @@ class UsuarioController {
   }
 
   buscaFiltro(req, res) {
-    const filtro = req.body.filtro;
-    const usuario = usuario_model.buscaFiltro(filtro);
+    const { valor } = req.params;
+    const usuario = usuario_model.buscaFiltro(valor);
     return usuario
       .then((usuariores) => res.status(200).json(usuariores))
       .catch((error) => res.status(400).json(error.message));

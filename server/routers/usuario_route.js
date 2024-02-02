@@ -4,7 +4,7 @@ const usuarioController = require("../controllers/usuario_controller");
 
 router.get("/usuario", usuarioController.listar);
 
-router.get("/usuario/filtro", usuarioController.buscaFiltro);
+router.get("/usuario/filtro/:valor", usuarioController.buscaFiltro);
 
 router.get("/usuario/desativados", usuarioController.listarDesativados);
 
